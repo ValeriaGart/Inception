@@ -28,5 +28,17 @@ The repository contains the following key files and directories:
 
 1. **Clone the Repository**  
    ```bash
-   git clone https://github.com/yourusername/inception.git
+   git clone git@github.com:ValeriaGart/Inception.git 
    cd inception
+2. **Build the Docker Images**
+   ```bash
+   docker-compose build
+3. **Start the Containers**
+   ```bash
+   docker-compose up -d
+4. **Access the Application**
+   - Visit http://localhost in your browser to access the WordPress site.
+   - You should see the WordPress setup page if it's your first time running the containers.
+5. **Stop the Containers**
+   ```bash
+   docker-compose down
