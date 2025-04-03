@@ -35,5 +35,5 @@ else
 	 				--user_pass=$MYSQL_PASSWORD_TWO
 fi
 
-mkdir -p /var/run/php
+#mkdir -p /var/run/php
 exec /usr/sbin/php-fpm7.4 -F
