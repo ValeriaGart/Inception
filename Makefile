@@ -4,7 +4,8 @@ up:
 	mkdir -p /home/valeria/Code/inception_test/mariadb_data
 	mkdir -p /home/valeria/Code/inception_test/wordpress_data
 	cd srcs && \
-	docker-compose up --build
+	docker-compose up --build -d
+	@echo "🟢 Containers are up and running!"
 
 down:
 	cd srcs && docker compose down -v
@@ -13,10 +14,10 @@ status :
 	docker ps
 
 stop : 
-	docker-compose stop
+	cd srcs && docker-compose stop
 
 start : 
-	docker-compose start
+	cd srcs && docker-compose start
 
 clean: 
 	@echo "🧹 Stopping and removing containers..."
@@ -33,7 +34,5 @@ clean:
 
 re: clean all
 
-dead:
-	docker system prune -a --volumes
 
-PHONY: all up down status stop start clean re dead
+PHONY: all up down status stop start clean re
