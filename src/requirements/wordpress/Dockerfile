@@ -1,16 +1,10 @@
-FROM debian:buster
+FROM debian:latest
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt install wget -y
-RUN apt install php7.4 -y
-RUN apt install php-fpm -y
-RUN apt install php-mysql -y
-RUN apt install curl -y
+RUN apt update && apt upgrade -y && apt install -y \
+    php-fpm php-mysqli curl
 
-COPY ./www.conf /etc/php/7.4/fpm/pool.d/www.conf
-RUN mkdir -p /var/run/php/ && chown www-data:www-data /var/run/php/
+COPY www.conf /etc/php/8.2/fpm/pool.d/.
+COPY wpscript.sh .
+RUN chmod +x wpscript.sh
 
-COPY conf.sh /usr/bin/conf.sh
-RUN chmod +x /usr/bin/conf.sh
-
-CMD ["sh", "-c","/usr/bin/conf.sh"]
+CMD ["./wpscript.sh"]
