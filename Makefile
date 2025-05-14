@@ -1,27 +1,26 @@
 all: up
-	@echo "All containers are up and running"
-	@echo "You can access the WordPress site at http://localhost:8080"
 
 up:
-	mkdir /home/valeria/Code/inception_test/mariadb_data
-	mkdir /home/valeria/Code/inception_test/wordpress_data
-	docker compose up --build 
+	mkdir -p /home/valeria/Code/inception_test/mariadb_data
+	mkdir -p /home/valeria/Code/inception_test/wordpress_data
+	cd srcs && \
+	docker-compose up --build
 
 down:
-	docker compose down -v
+	cd srcs && docker compose down -v
 
 status : 
 	docker ps
 
 stop : 
-	docker-compose -f docker-compose.yml stop
+	docker-compose stop
 
 start : 
-	docker-compose -f docker-compose.yml start
+	docker-compose start
 
 clean: 
 	@echo "🧹 Stopping and removing containers..."
-	@docker-compose -f docker-compose.yml down -v
+	@cd srcs && docker compose down -v
 
 	@echo "🗑️ Deleting MariaDB data..."
 	@sudo rm -rf /home/valeria/Code/inception_test/mariadb_data*

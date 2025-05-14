@@ -8,7 +8,9 @@ services:
     ports:
       - "443:443"
     volumes:
-      - wordpress_data:/var/www/html:delegated
+      - ../wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
     restart: on-failure
     networks:
       - inception
@@ -17,10 +19,16 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    container_name: wp-php
+    container_name: wordpress
     volumes:
-      - wordpress_data:/var/www/html:delegated
+      - ../wordpress_data:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
     restart: on-failure
+    expose:
+      - 9000
     networks:
       - inception
 
@@ -31,7 +39,9 @@ services:
     container_name: mariadb
     restart: on-failure
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - ../mariadb_data:/var/lib/mysql
+    env_file:
+      - .env
     expose:
       - 3306
     networks:
@@ -41,6 +51,7 @@ networks:
   inception:
     driver: bridge
 
+#change the volumes path to your local path TODO
 volumes:
   mariadb_data:
     driver: local
